@@ -156,8 +156,97 @@ function initPortfolioFilter() {
   filterBoxes(initialButton.dataset.filter);
 }
 /* ---------- End Portfolio Filter ---------- */
+
+/* ---------- Start Landing Slider ---------- */
+function initLandingSlider() {
+  const landing = document.querySelector(".landing");
+  if (!landing) return;
+
+  const slides = landing.querySelectorAll(".text .content");
+  const bullets = landing.querySelectorAll(".bullets button");
+  const prevButton = landing.querySelector(".prev");
+  const nextButton = landing.querySelector(".next");
+
+  if (slides.length === 0) return;
+
+  const AUTOPLAY_DELAY = 5000; // milliseconds between slides
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  let currentIndex = 0;
+  let timerId = null;
+
+  // Download every background once, so switching slides never shows an empty frame
+  slides.forEach((slide) => {
+    const preloadImage = new Image();
+    preloadImage.src = slide.dataset.bg;
+  });
+
+  // The single place that changes the slider state
+  function goToSlide(index) {
+    // Wrap around: after the last slide go to the first, before the first go to the last
+    currentIndex = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("active", i === currentIndex);
+    });
+
+    bullets.forEach((bullet, i) => {
+      const isActive = i === currentIndex;
+      bullet.classList.toggle("active", isActive);
+
+      if (isActive) {
+        bullet.setAttribute("aria-current", "true");
+      } else {
+        bullet.removeAttribute("aria-current");
+      }
+    });
+
+    // The image path comes from the HTML (data-bg), so JS sets it inline
+    landing.style.backgroundImage = `url("${slides[currentIndex].dataset.bg}")`;
+  }
+
+  function startAutoplay() {
+    if (prefersReducedMotion) return;
+    stopAutoplay(); // never run two timers at the same time
+    timerId = setInterval(() => goToSlide(currentIndex + 1), AUTOPLAY_DELAY);
+  }
+
+  function stopAutoplay() {
+    clearInterval(timerId);
+    timerId = null;
+  }
+
+  // Arrows
+  if (prevButton)
+    prevButton.addEventListener("click", () => goToSlide(currentIndex - 1));
+  if (nextButton)
+    nextButton.addEventListener("click", () => goToSlide(currentIndex + 1));
+
+  // Bullets: the bullet number is the slide number
+  bullets.forEach((bullet, i) => {
+    bullet.addEventListener("click", () => goToSlide(i));
+  });
+
+  // Pause while the user is looking at / using the slider
+  landing.addEventListener("mouseenter", stopAutoplay);
+  landing.addEventListener("mouseleave", startAutoplay);
+  landing.addEventListener("focusin", stopAutoplay);
+  landing.addEventListener("focusout", startAutoplay);
+
+  // Start from the slide marked .active in the HTML
+  const initialIndex = [...slides].findIndex((slide) =>
+    slide.classList.contains("active"),
+  );
+  goToSlide(initialIndex === -1 ? 0 : initialIndex);
+  startAutoplay();
+}
+/* ---------- End Landing Slider ---------- */
+
 /* ---------- Start App ---------- */
 initMobileMenu();
 initActiveNavLink();
 initPortfolioFilter();
+initLandingSlider();
 /* ---------- End App ---------- */

@@ -199,7 +199,9 @@ header nav .form i {
   background-color: #1f2021;
   background-image: url("../images/landing.jpg");
   background-size: cover;
+  background-position: center;
   position: relative;
+  transition: background-image 0.6s ease;
 }
 .landing .overlay {
   position: absolute;
@@ -227,6 +229,12 @@ header nav .form i {
 /* Only the active slide is visible */
 .landing .text .content:not(.active) {
   display: none;
+}
+/* Fade in the text of the new slide (skipped if the user prefers less motion) */
+@media (prefers-reduced-motion: no-preference) {
+  .landing .text .content.active {
+    animation: fade-in 0.6s ease;
+  }
 }
 @media (max-width: 767px) {
   .landing .text {
