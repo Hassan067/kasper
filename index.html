@@ -1,8 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kasper | Template Two</title>
     <!-- Render All Elements Normally -->
@@ -13,24 +12,35 @@
     <link rel="stylesheet" href="css/kasper.css" />
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <!-- Start Header -->
     <header>
       <div class="container">
-        <a href="#" class="logo">
-          <img src="images/logo.png" alt="Logo" />
+        <a href="#home" class="logo">
+          <img src="images/logo.png" alt="Kasper" />
         </a>
         <nav>
-          <i class="fas fa-bars toggle-menu"></i>
-          <ul>
-            <li><a class="active" href="#">Home</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Portfolio</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Pricing</a></li>
-            <li><a href="#">Contact</a></li>
+          <button
+            class="toggle-menu"
+            type="button"
+            aria-label="Toggle navigation"
+            aria-controls="main-nav"
+            aria-expanded="false"
+          >
+            <i class="fas fa-bars" aria-hidden="true"></i>
+          </button>
+          <ul id="main-nav">
+            <li><a class="active" href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
           <div class="form">
             <i class="fas fa-search"></i>
@@ -40,38 +50,78 @@
     </header>
     <!-- End Header -->
     <!-- Start Landing -->
-    <div class="landing">
+    <section class="landing" id="home">
       <div class="overlay"></div>
       <div class="text">
-        <div class="content">
+        <!-- Each .content is one slide; data-bg is the background image for that slide -->
+        <div class="content active" data-bg="images/landing.jpg">
           <h2>
             Hello World!<br />
             We Are Kasper We Make Art.
           </h2>
           <p>
-            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget tincidunt
-            nibh pulvinar a. Curabitur aliquet quam. Accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet
-            elit, eget tincidunt.
+            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+            Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
+            Curabitur aliquet quam. Accumsan id imperdiet et, porttitor at sem.
+            Mauris blandit aliquet elit, eget tincidunt.
+          </p>
+        </div>
+        <div class="content" data-bg="images/landing-02.jpg">
+          <h2>
+            Creative Ideas<br />
+            Built With Clean Code.
+          </h2>
+          <p>
+            From the first sketch to the final line of code, we turn ideas into
+            fast, responsive websites that look great on every screen and are
+            easy to grow over time.
+          </p>
+        </div>
+        <div class="content" data-bg="images/landing-03.jpg">
+          <h2>
+            Your Vision,<br />
+            Our Pixel-Perfect Design.
+          </h2>
+          <p>
+            We listen first, then design and build together with you, so the
+            final result feels like your brand and works the way your visitors
+            expect.
           </p>
         </div>
       </div>
-      <i class="fas fa-angle-left change-background fa-2x"></i>
-      <i class="fas fa-angle-right change-background fa-2x"></i>
-      <ul class="bullets">
-        <li></li>
-        <li class="active"></li>
-        <li></li>
-      </ul>
-    </div>
+      <button
+        class="change-background prev"
+        type="button"
+        aria-label="Previous slide"
+      >
+        <i class="fas fa-angle-left fa-2x" aria-hidden="true"></i>
+      </button>
+      <button
+        class="change-background next"
+        type="button"
+        aria-label="Next slide"
+      >
+        <i class="fas fa-angle-right fa-2x" aria-hidden="true"></i>
+      </button>
+      <div class="bullets">
+        <button
+          class="active"
+          type="button"
+          aria-label="Go to slide 1"
+        ></button>
+        <button type="button" aria-label="Go to slide 2"></button>
+        <button type="button" aria-label="Go to slide 3"></button>
+      </div>
+    </section>
     <!-- End Landing -->
     <!-- Start Services -->
-    <div class="services">
+    <section class="services" id="services">
       <div class="container">
         <div class="main-heading">
           <h2>Services</h2>
           <p>
-            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-            tincidunt.
+            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+            Mauris blandit aliquet elit, eget tincidunt.
           </p>
         </div>
         <div class="services-container">
@@ -80,8 +130,9 @@
             <div class="text">
               <h3>Vorem amet intuitive</h3>
               <p>
-                Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-                tincidunt nibh pulvinar a. Curabitur aliquet quam.
+                Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+                Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
+                Curabitur aliquet quam.
               </p>
             </div>
           </div>
@@ -90,8 +141,9 @@
             <div class="text">
               <h3>Vorem amet intuitive</h3>
               <p>
-                Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-                tincidunt nibh pulvinar a. Curabitur aliquet quam.
+                Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+                Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
+                Curabitur aliquet quam.
               </p>
             </div>
           </div>
@@ -100,8 +152,9 @@
             <div class="text">
               <h3>Vorem amet intuitive</h3>
               <p>
-                Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-                tincidunt nibh pulvinar a. Curabitur aliquet quam.
+                Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+                Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
+                Curabitur aliquet quam.
               </p>
             </div>
           </div>
@@ -110,19 +163,23 @@
             <div class="text">
               <h3>Vorem amet intuitive</h3>
               <p>
-                Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-                tincidunt nibh pulvinar a. Curabitur aliquet quam.
+                Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+                Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
+                Curabitur aliquet quam.
               </p>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
     <!-- End Services -->
     <!-- Start Design -->
-    <div class="design">
+    <section class="design">
       <div class="image">
-        <img src="images/mobile.png" alt="Mobile" />
+        <img
+          src="images/mobile.png"
+          alt="Kasper design shown on a mobile phone"
+        />
       </div>
       <div class="text">
         <h2>Our Design Comes With...</h2>
@@ -133,89 +190,91 @@
           <li>Browser Friendly</li>
         </ul>
       </div>
-    </div>
+    </section>
     <!-- End Design -->
     <!-- Start Portfolio -->
-    <div class="portfolio">
+    <section class="portfolio" id="portfolio">
       <div class="container">
         <div class="main-heading">
           <h2>Portfolio</h2>
           <p>
-            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-            tincidunt.
+            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+            Mauris blandit aliquet elit, eget tincidunt.
           </p>
         </div>
         <ul class="shuffle">
-          <li class="active">All</li>
-          <li>App</li>
-          <li>Photo</li>
-          <li>Web</li>
-          <li>Print</li>
+          <li>
+            <button class="active" type="button" data-filter="all">All</button>
+          </li>
+          <li><button type="button" data-filter="app">App</button></li>
+          <li><button type="button" data-filter="photo">Photo</button></li>
+          <li><button type="button" data-filter="web">Web</button></li>
+          <li><button type="button" data-filter="print">Print</button></li>
         </ul>
       </div>
       <div class="imgs-container">
-        <div class="box">
-          <img src="images/shuffle-01.jpg" alt="" />
+        <div class="box" data-category="app">
+          <img src="images/shuffle-01.jpg" alt="App design project" />
+          <div class="caption">
+            <h4>Awesome Image</h4>
+            <p>App Design</p>
+          </div>
+        </div>
+        <div class="box" data-category="photo">
+          <img src="images/shuffle-02.jpg" alt="Photography project" />
           <div class="caption">
             <h4>Awesome Image</h4>
             <p>Photography</p>
           </div>
         </div>
-        <div class="box">
-          <img src="images/shuffle-02.jpg" alt="" />
+        <div class="box" data-category="web">
+          <img src="images/shuffle-03.jpg" alt="Web design project" />
+          <div class="caption">
+            <h4>Awesome Image</h4>
+            <p>Web Design</p>
+          </div>
+        </div>
+        <div class="box" data-category="print">
+          <img src="images/shuffle-04.jpg" alt="Print design project" />
+          <div class="caption">
+            <h4>Awesome Image</h4>
+            <p>Print Design</p>
+          </div>
+        </div>
+        <div class="box" data-category="app">
+          <img src="images/shuffle-05.jpg" alt="App design project" />
+          <div class="caption">
+            <h4>Awesome Image</h4>
+            <p>App Design</p>
+          </div>
+        </div>
+        <div class="box" data-category="photo">
+          <img src="images/shuffle-06.jpg" alt="Photography project" />
           <div class="caption">
             <h4>Awesome Image</h4>
             <p>Photography</p>
           </div>
         </div>
-        <div class="box">
-          <img src="images/shuffle-03.jpg" alt="" />
+        <div class="box" data-category="web">
+          <img src="images/shuffle-07.jpg" alt="Web design project" />
           <div class="caption">
             <h4>Awesome Image</h4>
-            <p>Photography</p>
+            <p>Web Design</p>
           </div>
         </div>
-        <div class="box">
-          <img src="images/shuffle-04.jpg" alt="" />
+        <div class="box" data-category="print">
+          <img src="images/shuffle-08.jpg" alt="Print design project" />
           <div class="caption">
             <h4>Awesome Image</h4>
-            <p>Photography</p>
-          </div>
-        </div>
-        <div class="box">
-          <img src="images/shuffle-05.jpg" alt="" />
-          <div class="caption">
-            <h4>Awesome Image</h4>
-            <p>Photography</p>
-          </div>
-        </div>
-        <div class="box">
-          <img src="images/shuffle-06.jpg" alt="" />
-          <div class="caption">
-            <h4>Awesome Image</h4>
-            <p>Photography</p>
-          </div>
-        </div>
-        <div class="box">
-          <img src="images/shuffle-07.jpg" alt="" />
-          <div class="caption">
-            <h4>Awesome Image</h4>
-            <p>Photography</p>
-          </div>
-        </div>
-        <div class="box">
-          <img src="images/shuffle-08.jpg" alt="" />
-          <div class="caption">
-            <h4>Awesome Image</h4>
-            <p>Photography</p>
+            <p>Print Design</p>
           </div>
         </div>
       </div>
       <a href="#" class="more">More</a>
-    </div>
+    </section>
     <!-- End Portfolio -->
     <!-- Start Video -->
-    <div class="video">
+    <section class="video">
       <video autoplay muted loop>
         <source src="images/awesome-video.mp4" type="video/mp4" />
       </video>
@@ -224,28 +283,31 @@
         <p>Its All You Need</p>
         <button>See More</button>
       </div>
-    </div>
+    </section>
     <!-- End Video -->
     <!-- Start About -->
-    <div class="about">
+    <section class="about" id="about">
       <div class="container">
         <div class="main-heading">
           <h2>About Us</h2>
           <p>
-            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-            tincidunt.
+            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+            Mauris blandit aliquet elit, eget tincidunt.
           </p>
         </div>
-        <img src="images/about.png" alt="" />
+        <img
+          src="images/about.png"
+          alt="Kasper designs on desktop, laptop and tablet screens"
+        />
       </div>
-    </div>
+    </section>
     <!-- End About -->
     <!-- Start Stats -->
-    <div class="stats">
+    <section class="stats">
       <div class="container">
         <div class="box">
           <i class="fas fa-mug-hot"></i>
-          <div class="number">1.236</div>
+          <div class="number">1,236</div>
           <p>Coffee Drinks</p>
         </div>
         <div class="box">
@@ -264,30 +326,30 @@
           <p>Awards Received</p>
         </div>
       </div>
-    </div>
+    </section>
     <!-- End Stats -->
     <!-- Start Skills -->
-    <div class="our-skills">
+    <section class="our-skills">
       <div class="container">
         <div class="testimonials">
           <h3>Testimonials</h3>
           <p>
-            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-            tincidunt.
+            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+            Mauris blandit aliquet elit, eget tincidunt.
           </p>
           <div class="content">
-            <img src="images/skills-01.jpg" alt="" />
+            <img src="images/skills-01.jpg" alt="John Doe" />
             <div class="text">
-              Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-              tincidunt.
+              Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+              Mauris blandit aliquet elit, eget tincidunt.
               <p>John Doe, CEO</p>
             </div>
           </div>
           <div class="content">
-            <img src="images/skills-02.jpg" alt="" />
+            <img src="images/skills-02.jpg" alt="John Doe" />
             <div class="text">
-              Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-              tincidunt.
+              Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+              Mauris blandit aliquet elit, eget tincidunt.
               <p>John Doe, CEO</p>
             </div>
           </div>
@@ -300,8 +362,8 @@
         <div class="skills">
           <h3>Skills</h3>
           <p>
-            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-            tincidunt.
+            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+            Mauris blandit aliquet elit, eget tincidunt.
           </p>
           <div class="prog-holder">
             <h4>Adobe</h4>
@@ -329,24 +391,27 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
     <!-- End Skills -->
     <!-- Start Quote -->
-    <div class="quote">
+    <section class="quote">
       <div class="container">
-        <q>accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget tincidunt.</q>
+        <q
+          >accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet
+          elit, eget tincidunt.</q
+        >
         <span>John Doe</span>
       </div>
-    </div>
+    </section>
     <!-- End Quote -->
     <!-- Start Pricing -->
-    <div class="pricing">
+    <section class="pricing" id="pricing">
       <div class="container">
         <div class="main-heading">
           <h2>Pricing</h2>
           <p>
-            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-            tincidunt.
+            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+            Mauris blandit aliquet elit, eget tincidunt.
           </p>
         </div>
         <div class="plans">
@@ -412,12 +477,12 @@
           </div>
         </div>
         <p class="contact-text">Contact us if you have special request</p>
-        <a href="#" class="contact-link">Contact Us</a>
+        <a href="#contact" class="contact-link">Contact Us</a>
       </div>
-    </div>
+    </section>
     <!-- End Pricing -->
     <!-- Start Subscribe -->
-    <div class="subscribe">
+    <section class="subscribe">
       <div class="container">
         <form action="">
           <i class="far fa-envelope fa-lg"></i>
@@ -425,26 +490,41 @@
           <input type="submit" value="Subscribe" />
         </form>
         <p>
-          Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blan dit aliquet elit, eget tincidunt.
+          Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+          Mauris blandit aliquet elit, eget tincidunt.
         </p>
       </div>
-    </div>
+    </section>
     <!-- End Subscribe -->
     <!-- Start Contact -->
-    <div class="contact">
+    <section class="contact" id="contact">
       <div class="container">
         <div class="main-heading">
           <h2>Contact Us</h2>
           <p>
-            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget
-            tincidunt.
+            Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+            Mauris blandit aliquet elit, eget tincidunt.
           </p>
         </div>
         <div class="content">
           <form action="">
-            <input class="main-input" type="text" name="name" placeholder="Your Name" />
-            <input class="main-input" type="email" name="mail" placeholder="Your Email" />
-            <textarea class="main-input" name="message" placeholder="Your Message"></textarea>
+            <input
+              class="main-input"
+              type="text"
+              name="name"
+              placeholder="Your Name"
+            />
+            <input
+              class="main-input"
+              type="email"
+              name="mail"
+              placeholder="Your Email"
+            />
+            <textarea
+              class="main-input"
+              name="message"
+              placeholder="Your Message"
+            ></textarea>
             <input type="submit" value="Send Message" />
           </form>
           <div class="info">
@@ -452,16 +532,18 @@
             <span class="phone">+00 123.456.789</span>
             <span class="phone">+00 123.456.789</span>
             <h4>Where We Are</h4>
-            <address>Awesome Address 17<br />New York, NYC<br />123-4567-890<br />USA</address>
+            <address>
+              Awesome Address 17<br />New York, NYC<br />123-4567-890<br />USA
+            </address>
           </div>
         </div>
       </div>
-    </div>
+    </section>
     <!-- End Contact -->
     <!-- Start Footer -->
-    <div class="footer">
+    <footer class="footer">
       <div class="container">
-        <img src="images/logo.png" alt="Logo" />
+        <img src="images/logo.png" alt="Kasper" />
         <p>We Are Social</p>
         <div class="social-icons">
           <i class="fab fa-facebook-f"></i>
@@ -469,9 +551,11 @@
           <i class="fas fa-home"></i>
           <i class="fab fa-linkedin"></i>
         </div>
-        <p class="copyright">&copy; 2021 <span>Kasper</span> All Right Reserved</p>
+        <p class="copyright">
+          &copy; 2021 <span>Kasper</span> All Right Reserved
+        </p>
       </div>
-    </div>
+    </footer>
     <!-- End Footer -->
   </body>
 </html>

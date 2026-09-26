@@ -19,6 +19,7 @@ html {
 body {
   font-family: "Open Sans", sans-serif;
 }
+
 ul {
   list-style: none;
 }
@@ -87,6 +88,18 @@ ul {
   line-height: 2;
   color: #777;
 }
+/* Clickable controls: remove the browser's default button look */
+.toggle-menu,
+.change-background,
+.landing .bullets button,
+.portfolio .shuffle button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
 /* End Components */
 /* Start Header */
 header {
@@ -123,6 +136,7 @@ header nav {
 header nav .toggle-menu {
   color: white;
   font-size: 22px;
+  display: flex;
 }
 @media (min-width: 768px) {
   header nav .toggle-menu {
@@ -211,6 +225,10 @@ header nav .form i {
 .landing .text .content {
   max-width: 500px;
 }
+/* Only the active slide is visible */
+.landing .text .content:not(.active) {
+  display: none;
+}
 @media (max-width: 767px) {
   .landing .text {
     width: 100%;
@@ -240,10 +258,10 @@ header nav .form i {
     display: none;
   }
 }
-.landing .fa-angle-left {
+.landing .prev {
   left: 30px;
 }
-.landing .fa-angle-right {
+.landing .next {
   right: 30px;
 }
 .landing .bullets {
@@ -253,14 +271,14 @@ header nav .form i {
   bottom: 30px;
   display: flex;
 }
-.landing .bullets li {
+.landing .bullets button {
   width: 20px;
   height: 20px;
   border: 1px solid white;
   border-radius: 50%;
   margin-right: 10px;
 }
-.landing .bullets li.active {
+.landing .bullets button.active {
   background-color: var(--main-color);
   border-color: var(--main-color);
 }
@@ -374,10 +392,10 @@ header nav .form i {
   display: flex;
   justify-content: center;
 }
-.portfolio .shuffle li {
+.portfolio .shuffle button {
   padding: 10px;
 }
-.portfolio .shuffle li.active {
+.portfolio .shuffle button.active {
   background-color: var(--main-color);
   color: white;
 }
