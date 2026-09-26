@@ -117,7 +117,47 @@ function initActiveNavLink() {
 }
 /* ---------- End Active Nav Link On Scroll ---------- */
 
+/* ---------- Start Portfolio Filter ---------- */
+function initPortfolioFilter() {
+  const filterButtons = document.querySelectorAll(".portfolio .shuffle button");
+  const boxes = document.querySelectorAll(".portfolio .imgs-container .box");
+
+  if (filterButtons.length === 0 || boxes.length === 0) return;
+
+  // Only one button can be active at a time
+  function setActiveButton(activeButton) {
+    filterButtons.forEach((button) => {
+      const isActive = button === activeButton;
+      button.classList.toggle("active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+  }
+
+  // Show the boxes that match the filter, hide the rest
+  function filterBoxes(filter) {
+    boxes.forEach((box) => {
+      const matches = filter === "all" || box.dataset.category === filter;
+      box.hidden = !matches;
+    });
+  }
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      setActiveButton(button);
+      filterBoxes(button.dataset.filter);
+    });
+  });
+
+  // Start from the button marked .active in the HTML (or the first one)
+  const initialButton =
+    document.querySelector(".portfolio .shuffle button.active") ||
+    filterButtons[0];
+  setActiveButton(initialButton);
+  filterBoxes(initialButton.dataset.filter);
+}
+/* ---------- End Portfolio Filter ---------- */
 /* ---------- Start App ---------- */
 initMobileMenu();
 initActiveNavLink();
+initPortfolioFilter();
 /* ---------- End App ---------- */
