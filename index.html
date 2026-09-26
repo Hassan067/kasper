@@ -16,6 +16,8 @@
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Main JavaScript File (defer = run after the HTML is fully parsed) -->
+    <script src="js/main.js" defer></script>
   </head>
   <body>
     <!-- Start Header -->
@@ -484,10 +486,24 @@
     <!-- Start Subscribe -->
     <section class="subscribe">
       <div class="container">
-        <form action="">
-          <i class="far fa-envelope fa-lg"></i>
-          <input type="email" name="mail" placeholder="Your Email" />
+        <form action="" method="post" novalidate>
+          <i class="far fa-envelope fa-lg" aria-hidden="true"></i>
+          <label for="subscribe-email" class="visually-hidden"
+            >Your email</label
+          >
+          <input
+            type="email"
+            id="subscribe-email"
+            name="mail"
+            placeholder="Your Email"
+            required
+            maxlength="254"
+            autocomplete="email"
+            aria-describedby="subscribe-email-error"
+          />
           <input type="submit" value="Subscribe" />
+          <p class="field-error" id="subscribe-email-error"></p>
+          <p class="form-status" role="status"></p>
         </form>
         <p>
           Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
@@ -507,25 +523,55 @@
           </p>
         </div>
         <div class="content">
-          <form action="">
+          <form action="" method="post" novalidate>
+            <label for="contact-name" class="visually-hidden">Your name</label>
             <input
               class="main-input"
               type="text"
+              id="contact-name"
               name="name"
               placeholder="Your Name"
+              required
+              minlength="2"
+              maxlength="100"
+              autocomplete="name"
+              aria-describedby="contact-name-error"
             />
+            <p class="field-error" id="contact-name-error"></p>
+
+            <label for="contact-email" class="visually-hidden"
+              >Your email</label
+            >
             <input
               class="main-input"
               type="email"
+              id="contact-email"
               name="mail"
               placeholder="Your Email"
+              required
+              maxlength="254"
+              autocomplete="email"
+              aria-describedby="contact-email-error"
             />
+            <p class="field-error" id="contact-email-error"></p>
+
+            <label for="contact-message" class="visually-hidden"
+              >Your message</label
+            >
             <textarea
               class="main-input"
+              id="contact-message"
               name="message"
               placeholder="Your Message"
+              required
+              minlength="10"
+              maxlength="2000"
+              aria-describedby="contact-message-error"
             ></textarea>
+            <p class="field-error" id="contact-message-error"></p>
+
             <input type="submit" value="Send Message" />
+            <p class="form-status" role="status"></p>
           </form>
           <div class="info">
             <h4>Get In Touch</h4>
@@ -557,6 +603,5 @@
       </div>
     </footer>
     <!-- End Footer -->
-    <script src="js/main.js"></script>
   </body>
 </html>

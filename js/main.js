@@ -320,6 +320,98 @@ function initSkillBars() {
 }
 /* ---------- End Skill Bars ---------- */
 
+/* ---------- Start Form Validation ---------- */
+// Simple email check: something@something.something (no spaces)
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// The rules live in the HTML (required, minlength, type="email").
+// This function only turns a broken rule into a friendly message.
+function getErrorMessage(field) {
+  const value = field.value.trim();
+  const label =
+    field.labels.length > 0 ? field.labels[0].textContent.trim() : field.name;
+
+  if (field.required && value === "") {
+    return `${label} is required.`;
+  }
+
+  if (field.type === "email" && value !== "" && !EMAIL_PATTERN.test(value)) {
+    return "Please enter a valid email address (example: name@mail.com).";
+  }
+
+  if (field.minLength > 0 && value !== "" && value.length < field.minLength) {
+    return `${label} must be at least ${field.minLength} characters.`;
+  }
+
+  return ""; // empty string = no error
+}
+
+// Write (or clear) the message in the element linked by aria-describedby
+function showFieldError(field, message) {
+  const errorElement = document.getElementById(
+    field.getAttribute("aria-describedby"),
+  );
+
+  field.setAttribute("aria-invalid", message ? "true" : "false");
+
+  if (errorElement) {
+    errorElement.textContent = message;
+  }
+}
+
+function validateField(field) {
+  const message = getErrorMessage(field);
+  showFieldError(field, message);
+  return message === "";
+}
+
+function initFormValidation(form) {
+  const fields = form.querySelectorAll("input:not([type='submit']), textarea");
+  const status = form.querySelector(".form-status");
+
+  form.addEventListener("submit", (event) => {
+    // Until Phase 3 there is no PHP file to receive the data, so we stop the page reload
+    event.preventDefault();
+
+    if (status) status.textContent = "";
+
+    let firstInvalidField = null;
+
+    fields.forEach((field) => {
+      const isValid = validateField(field);
+      if (!isValid && !firstInvalidField) {
+        firstInvalidField = field;
+      }
+    });
+
+    if (firstInvalidField) {
+      firstInvalidField.focus(); // take the user straight to the first problem
+      return;
+    }
+
+    if (status) {
+      status.textContent =
+        "Looks good! Sending will be connected to the server in Phase 3.";
+    }
+  });
+
+  // Once a field shows an error, re-check it on every key press so the error disappears when fixed
+  fields.forEach((field) => {
+    field.addEventListener("input", () => {
+      if (field.getAttribute("aria-invalid") === "true") {
+        validateField(field);
+      }
+    });
+  });
+}
+
+function initForms() {
+  document
+    .querySelectorAll(".contact form, .subscribe form")
+    .forEach(initFormValidation);
+}
+/* ---------- End Form Validation ---------- */
+
 /* ---------- Start App ---------- */
 initMobileMenu();
 initActiveNavLink();
@@ -327,4 +419,5 @@ initPortfolioFilter();
 initLandingSlider();
 initStatsCounters();
 initSkillBars();
+initForms();
 /* ---------- End App ---------- */
