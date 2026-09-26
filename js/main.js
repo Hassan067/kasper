@@ -64,6 +64,60 @@ function initMobileMenu() {
 }
 /* ---------- End Mobile Menu ---------- */
 
+/* ---------- Start Active Nav Link On Scroll ---------- */
+function initActiveNavLink() {
+  const navLinks = document.querySelectorAll('#main-nav a[href^="#"]');
+  const sections = document.querySelectorAll("section");
+
+  if (navLinks.length === 0 || sections.length === 0) return;
+
+  // Highlight the link whose href matches the given section id
+  function setActiveLink(sectionId) {
+    navLinks.forEach((link) => {
+      const isActive = link.hash === `#${sectionId}`;
+      link.classList.toggle("active", isActive);
+
+      if (isActive) {
+        link.setAttribute("aria-current", "true");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  // Not every section has a link in the nav (Design, Video, Stats...).
+  // Those sections belong to the closest linked section above them,
+  // e.g. while reading "Stats" the "About" link stays active.
+  const linkedIds = new Set([...navLinks].map((link) => link.hash.slice(1)));
+  const sectionToLinkId = new Map();
+  let lastLinkedId = null;
+
+  sections.forEach((section) => {
+    if (linkedIds.has(section.id)) {
+      lastLinkedId = section.id;
+    }
+    sectionToLinkId.set(section, lastLinkedId);
+  });
+
+  // rootMargin shrinks the viewport to a thin line in the middle of the screen.
+  // A section becomes "current" when it crosses that line.
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const linkId = sectionToLinkId.get(entry.target);
+        if (entry.isIntersecting && linkId) {
+          setActiveLink(linkId);
+        }
+      });
+    },
+    { rootMargin: "-50% 0px -49% 0px" },
+  );
+
+  sections.forEach((section) => observer.observe(section));
+}
+/* ---------- End Active Nav Link On Scroll ---------- */
+
 /* ---------- Start App ---------- */
 initMobileMenu();
+initActiveNavLink();
 /* ---------- End App ---------- */
