@@ -6,6 +6,29 @@
 
 "use strict";
 
+/* ---------- Start Helpers ---------- */
+// true when the user asked the operating system to reduce motion
+function userPrefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+// Run callback ONE time, the first time element becomes visible on screen.
+// threshold = how much of the element must be visible (0.4 = 40%)
+function onFirstVisible(element, callback, threshold = 0.4) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        observer.disconnect(); // stop watching: we only need it once
+        callback();
+      }
+    },
+    { threshold },
+  );
+
+  observer.observe(element);
+}
+/* ---------- End Helpers ---------- */
+
 /* ---------- Start Mobile Menu ---------- */
 function initMobileMenu() {
   const menuButton = document.querySelector(".toggle-menu");
@@ -170,9 +193,7 @@ function initLandingSlider() {
   if (slides.length === 0) return;
 
   const AUTOPLAY_DELAY = 5000; // milliseconds between slides
-  const prefersReducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
+  const reduceMotion = userPrefersReducedMotion();
 
   let currentIndex = 0;
   let timerId = null;
@@ -208,7 +229,7 @@ function initLandingSlider() {
   }
 
   function startAutoplay() {
-    if (prefersReducedMotion) return;
+    if (reduceMotion) return;
     stopAutoplay(); // never run two timers at the same time
     timerId = setInterval(() => goToSlide(currentIndex + 1), AUTOPLAY_DELAY);
   }
@@ -244,9 +265,66 @@ function initLandingSlider() {
 }
 /* ---------- End Landing Slider ---------- */
 
+/* ---------- Start Stats Counters ---------- */
+function initStatsCounters() {
+  const stats = document.querySelector(".stats");
+  const numbers = document.querySelectorAll(".stats .number");
+
+  if (!stats || numbers.length === 0) return;
+  if (userPrefersReducedMotion()) return; // keep the final numbers written in the HTML
+
+  const DURATION = 2000; // milliseconds
+  const formatter = new Intl.NumberFormat("en-US"); // 1236 -> "1,236"
+
+  // Remember each final number, then start the display from zero
+  numbers.forEach((numberElement) => {
+    numberElement.dataset.target = numberElement.textContent.replace(/\D/g, ""); // "1,236" -> "1236"
+    numberElement.textContent = "0";
+  });
+
+  function animateNumber(numberElement) {
+    const target = Number(numberElement.dataset.target);
+    const startTime = performance.now();
+
+    // requestAnimationFrame calls this before every screen repaint (~60 times per second)
+    function update(now) {
+      const progress = Math.min((now - startTime) / DURATION, 1); // goes from 0 to 1
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out: fast start, slow finish
+
+      numberElement.textContent = formatter.format(Math.round(target * eased));
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  onFirstVisible(stats, () => numbers.forEach(animateNumber), 0.5);
+}
+/* ---------- End Stats Counters ---------- */
+
+/* ---------- Start Skill Bars ---------- */
+function initSkillBars() {
+  const skills = document.querySelector(".our-skills .skills");
+
+  if (!skills) return;
+  if (userPrefersReducedMotion()) return; // keep the bars full
+
+  // CSS keeps the bars at width 0 while this class is on the element
+  skills.classList.add("is-waiting");
+
+  // Removing the class lets each bar grow back to its inline width (90%, 85%...)
+  onFirstVisible(skills, () => skills.classList.remove("is-waiting"), 0.3);
+}
+/* ---------- End Skill Bars ---------- */
+
 /* ---------- Start App ---------- */
 initMobileMenu();
 initActiveNavLink();
 initPortfolioFilter();
 initLandingSlider();
+initStatsCounters();
+initSkillBars();
 /* ---------- End App ---------- */

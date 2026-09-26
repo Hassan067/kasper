@@ -693,6 +693,13 @@ header nav .form i {
   height: 100%;
   position: relative;
 }
+/* Bars wait at 0 until JS removes .is-waiting, then grow to their inline width */
+.our-skills .skills.is-waiting .prog-holder .prog span {
+  width: 0 !important;
+}
+.our-skills .skills:not(.is-waiting) .prog-holder .prog span {
+  transition: width 1.5s ease;
+}
 .our-skills .skills .prog-holder .prog span::before {
   content: attr(data-progress);
   position: absolute;
