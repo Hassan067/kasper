@@ -22,7 +22,7 @@ function onFirstVisible(element, callback, threshold = 0.4) {
         callback();
       }
     },
-    { threshold },
+    { threshold }
   );
 
   observer.observe(element);
@@ -133,7 +133,7 @@ function initActiveNavLink() {
         }
       });
     },
-    { rootMargin: "-50% 0px -49% 0px" },
+    { rootMargin: "-50% 0px -49% 0px" }
   );
 
   sections.forEach((section) => observer.observe(section));
@@ -172,9 +172,7 @@ function initPortfolioFilter() {
   });
 
   // Start from the button marked .active in the HTML (or the first one)
-  const initialButton =
-    document.querySelector(".portfolio .shuffle button.active") ||
-    filterButtons[0];
+  const initialButton = document.querySelector(".portfolio .shuffle button.active") || filterButtons[0];
   setActiveButton(initialButton);
   filterBoxes(initialButton.dataset.filter);
 }
@@ -240,10 +238,8 @@ function initLandingSlider() {
   }
 
   // Arrows
-  if (prevButton)
-    prevButton.addEventListener("click", () => goToSlide(currentIndex - 1));
-  if (nextButton)
-    nextButton.addEventListener("click", () => goToSlide(currentIndex + 1));
+  if (prevButton) prevButton.addEventListener("click", () => goToSlide(currentIndex - 1));
+  if (nextButton) nextButton.addEventListener("click", () => goToSlide(currentIndex + 1));
 
   // Bullets: the bullet number is the slide number
   bullets.forEach((bullet, i) => {
@@ -257,9 +253,7 @@ function initLandingSlider() {
   landing.addEventListener("focusout", startAutoplay);
 
   // Start from the slide marked .active in the HTML
-  const initialIndex = [...slides].findIndex((slide) =>
-    slide.classList.contains("active"),
-  );
+  const initialIndex = [...slides].findIndex((slide) => slide.classList.contains("active"));
   goToSlide(initialIndex === -1 ? 0 : initialIndex);
   startAutoplay();
 }
@@ -328,8 +322,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // This function only turns a broken rule into a friendly message.
 function getErrorMessage(field) {
   const value = field.value.trim();
-  const label =
-    field.labels.length > 0 ? field.labels[0].textContent.trim() : field.name;
+  const label = field.labels.length > 0 ? field.labels[0].textContent.trim() : field.name;
 
   if (field.required && value === "") {
     return `${label} is required.`;
@@ -348,9 +341,7 @@ function getErrorMessage(field) {
 
 // Write (or clear) the message in the element linked by aria-describedby
 function showFieldError(field, message) {
-  const errorElement = document.getElementById(
-    field.getAttribute("aria-describedby"),
-  );
+  const errorElement = document.getElementById(field.getAttribute("aria-describedby"));
 
   field.setAttribute("aria-invalid", message ? "true" : "false");
 
@@ -370,10 +361,10 @@ function initFormValidation(form) {
   const status = form.querySelector(".form-status");
 
   form.addEventListener("submit", (event) => {
-    // Until Phase 3 there is no PHP file to receive the data, so we stop the page reload
-    event.preventDefault();
-
-    if (status) status.textContent = "";
+    if (status) {
+      status.textContent = "";
+      status.classList.remove("is-error");
+    }
 
     let firstInvalidField = null;
 
@@ -385,14 +376,15 @@ function initFormValidation(form) {
     });
 
     if (firstInvalidField) {
+      event.preventDefault(); // stop sending: there is something to fix first
       firstInvalidField.focus(); // take the user straight to the first problem
       return;
     }
 
-    if (status) {
-      status.textContent =
-        "Looks good! Sending will be connected to the server in Phase 3.";
-    }
+    // Everything is valid: let the browser send the form to the PHP handler (action="...").
+    // Disable the button so a double click does not send the same data twice.
+    const submitButton = form.querySelector('[type="submit"]');
+    if (submitButton) submitButton.disabled = true;
   });
 
   // Once a field shows an error, re-check it on every key press so the error disappears when fixed
@@ -406,9 +398,7 @@ function initFormValidation(form) {
 }
 
 function initForms() {
-  document
-    .querySelectorAll(".contact form, .subscribe form")
-    .forEach(initFormValidation);
+  document.querySelectorAll(".contact form, .subscribe form").forEach(initFormValidation);
 }
 /* ---------- End Form Validation ---------- */
 

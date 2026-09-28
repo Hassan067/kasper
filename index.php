@@ -1,6 +1,19 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/includes/helpers.php';
+
+startSession(); // must run before any HTML is sent
+
+// Results from the form handlers (shown once, then deleted)
+$contact = takeFlash('contact');
+$contactErrors = $contact['errors'] ?? [];
+$contactOld = $contact['old'] ?? [];
+
+$subscribe = takeFlash('subscribe');
+$subscribeErrors = $subscribe['errors'] ?? [];
+$subscribeOld = $subscribe['old'] ?? [];
+
 $pageTitle = 'Kasper | Template Two';
 
 require __DIR__ . '/includes/header.php';
@@ -408,24 +421,26 @@ require __DIR__ . '/includes/header.php';
     </section>
     <!-- End Pricing -->
     <!-- Start Subscribe -->
-    <section class="subscribe">
+    <section class="subscribe" id="subscribe">
       <div class="container">
-        <form action="" method="post" novalidate>
+        <form action="handlers/subscribe.php" method="post" novalidate>
           <i class="far fa-envelope fa-lg" aria-hidden="true"></i>
           <label for="subscribe-email" class="visually-hidden">Your email</label>
           <input
             type="email"
             id="subscribe-email"
-            name="mail"
+            name="email"
             placeholder="Your Email"
             required
             maxlength="254"
             autocomplete="email"
             aria-describedby="subscribe-email-error"
+            value="<?= e($subscribeOld['email'] ?? '') ?>"
+            <?= isset($subscribeErrors['email']) ? 'aria-invalid="true"' : '' ?>
           />
           <input type="submit" value="Subscribe" />
-          <p class="field-error" id="subscribe-email-error"></p>
-          <p class="form-status" role="status"></p>
+          <p class="field-error" id="subscribe-email-error"><?= e($subscribeErrors['email'] ?? '') ?></p>
+          <p class="form-status<?= isset($subscribeErrors['form']) ? ' is-error' : '' ?>" role="status"><?= e($subscribe['success'] ?? $subscribeErrors['form'] ?? '') ?></p>
         </form>
         <p>
           Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Mauris blandit aliquet elit, eget tincidunt.
@@ -444,7 +459,7 @@ require __DIR__ . '/includes/header.php';
           </p>
         </div>
         <div class="content">
-          <form action="" method="post" novalidate>
+          <form action="handlers/contact.php" method="post" novalidate>
             <label for="contact-name" class="visually-hidden">Your name</label>
             <input
               class="main-input"
@@ -457,22 +472,26 @@ require __DIR__ . '/includes/header.php';
               maxlength="100"
               autocomplete="name"
               aria-describedby="contact-name-error"
+              value="<?= e($contactOld['name'] ?? '') ?>"
+              <?= isset($contactErrors['name']) ? 'aria-invalid="true"' : '' ?>
             />
-            <p class="field-error" id="contact-name-error"></p>
+            <p class="field-error" id="contact-name-error"><?= e($contactErrors['name'] ?? '') ?></p>
 
             <label for="contact-email" class="visually-hidden">Your email</label>
             <input
               class="main-input"
               type="email"
               id="contact-email"
-              name="mail"
+              name="email"
               placeholder="Your Email"
               required
               maxlength="254"
               autocomplete="email"
               aria-describedby="contact-email-error"
+              value="<?= e($contactOld['email'] ?? '') ?>"
+              <?= isset($contactErrors['email']) ? 'aria-invalid="true"' : '' ?>
             />
-            <p class="field-error" id="contact-email-error"></p>
+            <p class="field-error" id="contact-email-error"><?= e($contactErrors['email'] ?? '') ?></p>
 
             <label for="contact-message" class="visually-hidden">Your message</label>
             <textarea
@@ -484,11 +503,12 @@ require __DIR__ . '/includes/header.php';
               minlength="10"
               maxlength="2000"
               aria-describedby="contact-message-error"
-            ></textarea>
-            <p class="field-error" id="contact-message-error"></p>
+              <?= isset($contactErrors['message']) ? 'aria-invalid="true"' : '' ?>
+            ><?= e($contactOld['message'] ?? '') ?></textarea>
+            <p class="field-error" id="contact-message-error"><?= e($contactErrors['message'] ?? '') ?></p>
 
             <input type="submit" value="Send Message" />
-            <p class="form-status" role="status"></p>
+            <p class="form-status<?= isset($contactErrors['form']) ? ' is-error' : '' ?>" role="status"><?= e($contact['success'] ?? $contactErrors['form'] ?? '') ?></p>
           </form>
           <div class="info">
             <h4>Get In Touch</h4>
