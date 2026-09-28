@@ -6,3 +6,6 @@ desktop.ini
 # Editor settings
 .vscode/
 .idea/
+
+# Secrets: real database credentials live only on your machine
+.env

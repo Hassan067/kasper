@@ -1,0 +1,8 @@
+# Kasper | Apache rules (XAMPP has mod_rewrite and AllowOverride enabled by default)
+RewriteEngine On
+
+# 1) Block hidden files and folders: .env, .git/, .gitignore, .htaccess ...
+RewriteRule (^|/)\. - [F]
+
+# 2) Block internal folders that must never be opened from the browser
+RewriteRule ^(config|includes|database)(/|$) - [F]
